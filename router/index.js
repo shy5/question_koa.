@@ -2,6 +2,8 @@ import KoaRouter from 'koa-router'
 
 // import { swaggerSpec } from '../config'
 import userRouter from './user'
+import questionRouter from './question'
+import labelRouter from './label'
 
 const router = new KoaRouter()
 
@@ -12,5 +14,7 @@ const router = new KoaRouter()
 // })
 
 router.use('/user', userRouter.routes())
+router.use('/question', questionRouter.routes())
+router.use('/label', labelRouter.routes())
 
 export default router

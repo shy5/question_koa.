@@ -48,10 +48,30 @@ const mongoConfig = {
     }
 }
 
-const schemaConfig = {
+const userSchemaConfig = {
     // autoIndex: true,
     _id: true,
-    collection: 'users', // 这里是为了避免新建的表会带上 s 后缀
+    collection: 'user', // 这里是为了避免新建的表会带上 s 后缀
+    timestamps: {
+        createdAt: 'createTime',
+        updatedAt: 'updateTime'
+    }
+}
+
+const questionSchemaConfig = {
+    // autoIndex: true,
+    _id: true,
+    collection: 'question', // 这里是为了避免新建的表会带上 s 后缀
+    timestamps: {
+        createdAt: 'createTime',
+        updatedAt: 'updateTime'
+    }
+}
+
+const labelSchemaConfig = {
+    // autoIndex: true,
+    id: true,
+    collection: 'label', // 这里是为了避免新建的表会带上 s 后缀
     timestamps: {
         createdAt: 'createTime',
         updatedAt: 'updateTime'
@@ -62,5 +82,7 @@ export {
     // swaggerSpec,
     // swaggerUI,
     mongoConfig,
-    schemaConfig
+    userSchemaConfig,
+    questionSchemaConfig,
+    labelSchemaConfig
 }

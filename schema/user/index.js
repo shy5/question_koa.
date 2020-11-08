@@ -1,5 +1,5 @@
 import mongoose from '../../database'
-import { schemaConfig } from '../../config'
+import { userSchemaConfig } from '../../config'
 
 const userSchema = mongoose.Schema({
     id: { type: String },
@@ -9,7 +9,7 @@ const userSchema = mongoose.Schema({
     userPhone: { type: String },
     email: { type: String },
     avatar: { type: String },
-}, schemaConfig)
+}, userSchemaConfig)
 
 const User = mongoose.model('user', userSchema)
 
