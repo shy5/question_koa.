@@ -54,6 +54,7 @@ router.post('/login', async (ctx, next) => {
 // 注册
 router.post('/register', async (ctx, next) => {
     const req = ctx.request.body
+    const { username, password, email, avatar } = req
     const user = await User.findOne({
         username: req.username
     }).countDocuments()
@@ -65,8 +66,10 @@ router.post('/register', async (ctx, next) => {
     try {
         await User.create({
             id: uuid(),
-            username: req.username,
-            password: md5(req.password)
+            username,
+            password: md5(password),
+            email,
+            avatar: avatar || 'https://hosjoy-oss-test.oss-cn-hangzhou.aliyuncs.com/images/20200717/a5ba487b-5513-47d0-aa74-4e513673f313.png'
         })
         ctx.body = {
             status: 0,

@@ -2,7 +2,7 @@ import mongoose from '../../database'
 import { labelSchemaConfig } from '../../config'
 
 const labelSchema = mongoose.Schema({
-    id: { type: String },
+    id: { type: Number },
     parentType: { type: Number },
     labelType: { type: Number },
     labelName: { type: String },
