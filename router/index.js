@@ -4,6 +4,7 @@ import KoaRouter from 'koa-router'
 import userRouter from './user'
 import questionRouter from './question'
 import labelRouter from './label'
+import answerRouter from './answer'
 
 const router = new KoaRouter()
 
@@ -16,5 +17,6 @@ const router = new KoaRouter()
 router.use('/user', userRouter.routes())
 router.use('/question', questionRouter.routes())
 router.use('/label', labelRouter.routes())
+router.use('/answer', answerRouter.routes())
 
 export default router

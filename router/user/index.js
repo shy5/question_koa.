@@ -2,7 +2,7 @@ import KoaRouter from 'koa-router'
 import md5 from 'md5'
 
 import User from '../../schema/user'
-import { userError } from '../../utils/errorcode'
+import { userError, serverError } from '../../utils/errorcode'
 import { createToken } from '../../utils/token'
 
 const router = new KoaRouter()
@@ -20,21 +20,26 @@ const router = new KoaRouter()
  */
 
 router.post('/login', async (ctx, next) => {
-    const req = ctx.request.body
-    const user = await User.findOne({
-        username: req.username,
-        password: md5(req.password)
-    })
-    .lean()
-    .exec()
-    if (user) {
-        ctx.body = {
-            code: 0,
-            message: '登录成功',
-            data: Object.assign({},  user )
+    try {
+        const req = ctx.request.body
+        const user = await User.findOne({
+            username: req.username,
+            password: md5(req.password)
+        })
+        .lean()
+        .exec()
+        if (user) {
+            ctx.body = {
+                code: 0,
+                message: '登录成功',
+                data: Object.assign({},  user )
+            }
+        } else {
+            ctx.body = userError.LOGIN_FAIL
         }
-    } else {
-        ctx.body = userError.LOGIN_FAIL
+    } catch (error) {
+        ctx.body = userError.RESGISTER_FAIL
+        return next()
     }
 })
 
@@ -53,17 +58,17 @@ router.post('/login', async (ctx, next) => {
 
 // 注册
 router.post('/register', async (ctx, next) => {
-    const req = ctx.request.body
-    const { username, password, email, avatar } = req
-    const user = await User.findOne({
-        username: req.username
-    }).countDocuments()
-    .exec()
-    if (user) {
-        ctx.body = userError.ACCOUNT_EXISTS
-        return next()
-    }
     try {
+        const req = ctx.request.body
+        const { username, password, email, avatar } = req
+        const user = await User.findOne({
+            username: req.username
+        }).countDocuments()
+        .exec()
+        if (user) {
+            ctx.body = userError.ACCOUNT_EXISTS
+            return next()
+        }
         await User.create({
             id: uuid(),
             username,
@@ -76,10 +81,19 @@ router.post('/register', async (ctx, next) => {
             message: '创建成功'
         }
         return next()
-    } catch (err) {
+    } catch (error) {
         ctx.body = userError.RESGISTER_FAIL
         return next()
     }
+})
+
+// 登出，需要做权限控制，暂时没有实现
+router.get('/logout', async (ctx, next) => {
+    ctx.body = {
+        status: 0,
+        message: '操作成功'
+    }
+    return next()
 })
 
 export default router

@@ -36,7 +36,15 @@ app.use(bodyParser())
     // .use(serve(path.join(__dirname + '/views/')))
 
     .use(async (ctx, next) => {
-        await next()
+        // try {
+            await next()
+        // } catch (err) {
+        //     console.log(err)
+        //     ctx.body = {
+        //         status: 500,
+        //         message: '更新成功'
+        //     }
+        // }
     })
 
     .use(router.routes())
