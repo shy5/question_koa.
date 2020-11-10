@@ -78,11 +78,22 @@ const labelSchemaConfig = {
     }
 }
 
+const answerSchemaConfig = {
+    // autoIndex: true,
+    id: true,
+    collection: 'answer', // 这里是为了避免新建的表会带上 s 后缀
+    timestamps: {
+        createdAt: 'createTime',
+        updatedAt: 'updateTime'
+    }
+}
+
 export {
     // swaggerSpec,
     // swaggerUI,
     mongoConfig,
     userSchemaConfig,
     questionSchemaConfig,
-    labelSchemaConfig
+    labelSchemaConfig,
+    answerSchemaConfig
 }
