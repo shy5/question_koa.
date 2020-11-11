@@ -123,7 +123,7 @@ router.get('/list', async (ctx, next) => {
     }
 })
 
-// 创建问题
+// 问题详情
 router.get('/detail/:id', async (ctx, next) => {
     try {
         const { id } = ctx.params
@@ -147,5 +147,27 @@ router.get('/detail/:id', async (ctx, next) => {
     }
 })
 
+// 
+router.get('/the-week-todo', async (ctx, next) => {
+    try {
+        const data = await Question.findOne({id})
+            .lean()
+            .exec()
+        if (data) {
+            ctx.body = {
+                status: 0,
+                message: '成功',
+                data
+            }
+            return next()
+        } else {
+            ctx.body = questionError.DETAIL_FAILE
+            return next()
+        }
+    } catch (error) {
+        ctx.body = serverError.SERVER_ERROR
+        return next()
+    }
+})
 
 export default router

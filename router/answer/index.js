@@ -90,7 +90,7 @@ router.get('/detail/:answerId', async (ctx, next) => {
 })
 
 // 更新回答
-router.put('/update/:answerId', async (ctx, next) => {
+router.put('/update', async (ctx, next) => {
     try {
         const req = ctx.request.body
         const { questionId, answerContent, answerUid, answerId } = req
@@ -117,16 +117,20 @@ router.put('/update/:answerId', async (ctx, next) => {
 router.put('/update/best', async (ctx, next) => {
     try {
         const req = ctx.request.body
-        const { questionId, answerId } = req
-        // $位置运算符仅更新与查询匹配的第一个数组项
+        const { answerId } = req
+        await Answer.updateMany(
+            {
+                best: 1
+            },
+            {
+                best: '2'
+            })
         await Answer.updateOne(
             {
                 id: answerId
             },
             {
-                $set: {
-                    best: '1',
-                }
+                best: '1'
             })
         ctx.body = {
             status: 0,
