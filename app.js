@@ -36,15 +36,14 @@ app.use(bodyParser())
     // .use(serve(path.join(__dirname + '/views/')))
 
     .use(async (ctx, next) => {
-        // try {
+        try {
             await next()
-        // } catch (err) {
-        //     console.log(err)
-        //     ctx.body = {
-        //         status: 500,
-        //         message: '更新成功'
-        //     }
-        // }
+        } catch (err) {
+            ctx.body = {
+                status: 500,
+                message: '系统出错，请稍后再试'
+            }
+        }
     })
 
     .use(router.routes())
