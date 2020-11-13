@@ -129,7 +129,7 @@ router.get('/detail/:id', async (ctx, next) => {
 // 
 router.get('/the-week-todo', async (ctx, next) => {
     const data = await Question.find()
-        .sort({ answerCount: 1, updateTime: -1 })
+        .sort({ answerCount: 1, createTime: 1 })
         .limit(1)
         .lean()
         .exec()
